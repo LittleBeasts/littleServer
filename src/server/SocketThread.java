@@ -26,6 +26,7 @@ public class SocketThread implements Runnable {
                 Client client = new Client(clientSocket);
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                in.ready(); // Könnte eine Prüfung für neue Pakete sein? ToDo: Testen
                 // TODO: Protocol Gedöns here
                 server.getLandingRoom().registerClient(client);
                 out.println(server.getRoomList().toString());
