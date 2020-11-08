@@ -6,20 +6,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Room implements Runnable {
+public class Room extends Thread {
 
     private List<Client> clientList;
     private String uuid;
     private String roomName;
+    private boolean inUse;
 
     Room(String roomName){
         this.clientList = new ArrayList<>();
         this.roomName = roomName;
         this.uuid = UUID.randomUUID().toString();
+        this.inUse = true;
+        this.start();
+    }
+
+    public void stopThread(){
+        this.inUse = false;
     }
 
     public void registerClient(Client client){
         clientList.add(client);
+        System.out.println("Added client to clientList");
     }
 
     public void removeClient(Client client){
@@ -61,6 +69,8 @@ public class Room implements Runnable {
 
     @Override
     public void run() {
-        // TODO: Timeslotted Client Message Listening
+        while (inUse){
+            int a = 1+1; // TODO: Timeslotted Client Message Listening
+        }
     }
 }

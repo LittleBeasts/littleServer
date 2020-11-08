@@ -7,8 +7,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client {
-
+public class Client2 {
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -32,15 +31,16 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
+        Client2 client = new Client2();
         client.startConnection("127.0.0.1", 9999);
         String response = client.sendMessage("hello server");
         System.out.println(response);
         Scanner scanner = new Scanner(System.in);
         while (true){
-            response = client.sendMessage(scanner.nextLine());
+            String in = scanner.nextLine();
+            System.out.println("Eingabe: " + in);
+            response = client.sendMessage(in);
             System.out.println(response);
         }
     }
-
 }

@@ -42,7 +42,14 @@ public class Server {
 
     Server(){
         roomList = new ArrayList<>();
-        addRoom("landingRoom");
+        try {
+            SocketThread socketThread = new SocketThread(9999, this);
+            socketThread.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.landingRoom = new LandingRoom(this);
+        this.landingRoom.start();
     }
 
     public void addRoom(String roomName){
@@ -59,5 +66,6 @@ public class Server {
 
     public static void main(String[] args) throws IOException {
         Server server=new Server();
+
     }
 }
