@@ -2,7 +2,6 @@ package server;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class LandingRoom extends Thread {
@@ -32,20 +31,24 @@ public class LandingRoom extends Thread {
     public void run() {
         // TODO: Lässt nur raumverwaltung & Chat zu
         System.out.println("Landing Room Thread running");
+        int cint = 100000;
         while (true) {
             List<Client> clientList = this.room.getClientList();
-            // System.out.println(clientList.size());
-            for (Client client :
-                    clientList) {
-                System.out.println("checking client");
-                try {
-                    System.out.println(client.getInputReader().ready());
-                    if (client.getInputReader().ready()) {
-                        String message = client.getInputReader().readLine();
-                        broadcastMessage(message, client);
+            if (cint++ % 400000000 == 0) {
+               // System.out.println(clientList.size());
+                for (Client client : clientList) {
+                    //System.out.println("checking client: " + client.getUuid());
+                    try {
+                        //System.out.println(client.getInputReader().ready());
+                        if (client.getInputReader().ready()) {
+                            System.out.println("Ready");
+                            String message = client.getInputReader().readLine();
+                            System.out.println(message);
+                            broadcastMessage(message, client);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }

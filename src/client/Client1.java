@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client2 {
+public class Client1 extends Thread {
+
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -18,10 +19,10 @@ public class Client2 {
         in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
     }
 
-    public String sendMessage(String msg) throws IOException {
+    public void sendMessage(String msg) throws IOException {
         out.println(msg);
-        String resp = in.readLine();
-        return resp;
+        // String resp = in.readLine();
+        // return resp;
     }
 
     public void stopConnection() throws IOException {
@@ -31,16 +32,30 @@ public class Client2 {
     }
 
     public static void main(String[] args) throws IOException {
-        Client2 client = new Client2();
+        Client1 client = new Client1();
         client.startConnection("127.0.0.1", 9999);
-        String response = client.sendMessage("hello server");
-        System.out.println(response);
+        client.sendMessage("hello server");
+
+        System.out.println(client.in.readLine());
+        //System.out.println(response);
         Scanner scanner = new Scanner(System.in);
-        while (true){
-            String in = scanner.nextLine();
-            System.out.println("Eingabe: " + in);
-            response = client.sendMessage(in);
-            System.out.println(response);
+        client.runnable.run();
+        while (true) {
+            System.out.println("Waiting for input...");
+            client.sendMessage(scanner.nextLine());
+            //System.out.println(response);
         }
     }
+
+    Runnable runnable = () ->{ while (true) {
+        try {
+            if (this.in.ready()) {
+                String resp = in.readLine();
+                System.out.println(resp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }};
 }
+
