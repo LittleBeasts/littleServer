@@ -35,13 +35,12 @@ public class LandingRoom extends Thread {
         while (true) {
             List<Client> clientList = this.room.getClientList();
             if (cint++ % 400000000 == 0) {
-               // System.out.println(clientList.size());
+                // System.out.println(clientList.size());
                 for (Client client : clientList) {
                     //System.out.println("checking client: " + client.getUuid());
                     try {
                         //System.out.println(client.getInputReader().ready());
                         if (client.getInputReader().ready()) {
-                            System.out.println("Ready");
                             String message = client.getInputReader().readLine();
                             System.out.println(message);
                             broadcastMessage(message, client);
@@ -58,8 +57,8 @@ public class LandingRoom extends Thread {
         System.out.println("Broadcasting: " + message);
         for (Client client :
                 this.room.getClientList()) {
-            //if (!client.getUuid().equals(sender.getUuid()))
-            client.getOutWriter().println(message);
+            if (!client.getUuid().equals(sender.getUuid()))
+                client.getOutWriter().println(sender.getUuid() + ": " + message);
         }
     }
 }

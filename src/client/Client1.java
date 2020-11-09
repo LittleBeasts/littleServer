@@ -1,17 +1,15 @@
 package client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class Client1 extends Thread {
+public class Client1 {
 
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
+    private ClientListener clientListener;
 
     public void startConnection(String ip, int port) throws IOException {
         clientSocket = new Socket(ip, port);
@@ -21,8 +19,6 @@ public class Client1 extends Thread {
 
     public void sendMessage(String msg) throws IOException {
         out.println(msg);
-        // String resp = in.readLine();
-        // return resp;
     }
 
     public void stopConnection() throws IOException {
@@ -34,28 +30,17 @@ public class Client1 extends Thread {
     public static void main(String[] args) throws IOException {
         Client1 client = new Client1();
         client.startConnection("127.0.0.1", 9999);
-        client.sendMessage("hello server");
+        Scanner scanner = new Scanner(new BufferedInputStream(System.in));
+        client.clientListener = new ClientListener(client.clientSocket);
 
-        System.out.println(client.in.readLine());
-        //System.out.println(response);
-        Scanner scanner = new Scanner(System.in);
-        client.runnable.run();
         while (true) {
             System.out.println("Waiting for input...");
             client.sendMessage(scanner.nextLine());
-            //System.out.println(response);
         }
-    }
 
-    Runnable runnable = () ->{ while (true) {
-        try {
-            if (this.in.ready()) {
-                String resp = in.readLine();
-                System.out.println(resp);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }};
+    }
 }
+
+
+
 
