@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import static protocol.Message.encodeOutgoingMessageForClient;
+
 public class LandingRoom extends Thread {
 
     private Server server;
@@ -24,7 +26,7 @@ public class LandingRoom extends Thread {
         this.room.registerClient(client);
         PrintWriter outWriter = client.getOutWriter();
         // TODO: Protokoll gedöns für Raumliste hier
-        outWriter.println("Welcome to the Lobby!");
+        outWriter.println(encodeOutgoingMessageForClient("Server", "Welcome to the Lobby!"));
     }
 
     @Override
@@ -58,7 +60,7 @@ public class LandingRoom extends Thread {
         for (Client client :
                 this.room.getClientList()) {
             if (!client.getUuid().equals(sender.getUuid()))
-                client.getOutWriter().println(sender.getUuid() + ": " + message);
+                client.getOutWriter().println(message);
         }
     }
 }

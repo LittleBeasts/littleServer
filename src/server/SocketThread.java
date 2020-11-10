@@ -20,10 +20,10 @@ public class SocketThread extends Thread {
 
     @Override
     public void run() {
-        while (true){
+        while (true) {
             try {
                 Socket clientSocket = this.serverSocket.accept();
-                Client client = new Client(clientSocket);
+                Client client = new Client(clientSocket, "User");
                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
                 // TODO: Protocol Gedöns here

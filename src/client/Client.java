@@ -4,6 +4,8 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
+import static protocol.Message.encodeOutgoingMessageForClient;
+
 public class Client {
 
     private Socket clientSocket;
@@ -18,7 +20,7 @@ public class Client {
     }
 
     public void sendMessage(String msg) throws IOException {
-        out.println(msg);
+        out.println(encodeOutgoingMessageForClient("name", msg));
     }
 
     public void stopConnection() throws IOException {

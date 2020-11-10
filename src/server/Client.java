@@ -1,10 +1,13 @@
 package server;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.UUID;
 
-public class Client{
+public class Client {
 
     // TODO: Complete Client
 
@@ -12,8 +15,9 @@ public class Client{
     private BufferedReader inputReader;
     private PrintWriter outWriter;
     private String uuid;
+    private String name;
 
-    Client(Socket socket){
+    Client(Socket socket, String name) {
         this.socket = socket;
         try {
             this.inputReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -22,6 +26,7 @@ public class Client{
             e.printStackTrace();
         }
         this.uuid = UUID.randomUUID().toString();
+        this.name = name;
     }
 
     public BufferedReader getInputReader() {
@@ -38,5 +43,9 @@ public class Client{
 
     public Socket getSocket() {
         return socket;
+    }
+
+    public String getName() {
+        return name;
     }
 }

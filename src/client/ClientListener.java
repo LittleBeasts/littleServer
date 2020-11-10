@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
+import static protocol.Message.decodeMessage;
+
 public class ClientListener extends Thread {
 
     private BufferedReader in;
@@ -22,7 +24,7 @@ public class ClientListener extends Thread {
             try {
                 if (in.ready()) {
                     String resp = in.readLine();
-                    System.out.println(resp);
+                    System.out.println(decodeMessage(resp));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
