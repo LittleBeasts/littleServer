@@ -33,15 +33,12 @@ public class LandingRoom extends Thread {
     public void run() {
         // TODO: Lässt nur raumverwaltung & Chat zu
         System.out.println("Landing Room Thread running");
-        int cint = 100000;
+        int cint = 0;
         while (true) {
             List<Client> clientList = this.room.getClientList();
             if (cint++ % 400000000 == 0) {
-                // System.out.println(clientList.size());
                 for (Client client : clientList) {
-                    //System.out.println("checking client: " + client.getUuid());
                     try {
-                        //System.out.println(client.getInputReader().ready());
                         if (client.getInputReader().ready()) {
                             String message = client.getInputReader().readLine();
                             System.out.println(message);
