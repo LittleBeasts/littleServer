@@ -57,7 +57,8 @@ public class LandingRoom extends Thread {
         for (Client client :
                 this.room.getClientList()) {
             if (!client.getUuid().equals(sender.getUuid()))
-                client.getOutWriter().println(message);
+                //client.getOutWriter().println(message);
+                client.getOutWriter().println(encodeOutgoingMessageForClient(sender.getName(), message));
         }
     }
 }
