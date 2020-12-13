@@ -32,12 +32,12 @@ public class Client {
     public static void main(String[] args) throws IOException {
         Client client = new Client();
         client.startConnection("127.0.0.1", 9999);
-        Scanner scanner = new Scanner(new BufferedInputStream(System.in));
+        //Scanner scanner = new Scanner(new BufferedInputStream(System.in));
         client.clientListener = new ClientListener(client.clientSocket);
-        while (true) {
-            System.out.println("Waiting for input...");
-            client.sendMessage(scanner.nextLine());
-        }
+       // while (true) {
+       //     System.out.println("Waiting for input...");
+       //     client.sendMessage(scanner.nextLine());
+       // }
 
     }
 }
