@@ -4,9 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-import static protocol.Message.encodeOutgoingMessageForClient;
-
-public class Client {
+public class Client1 {
 
     private Socket clientSocket;
     private PrintWriter out;
@@ -20,7 +18,7 @@ public class Client {
     }
 
     public void sendMessage(String msg) throws IOException {
-        out.println(encodeOutgoingMessageForClient("name", msg));
+        out.println(msg);
     }
 
     public void stopConnection() throws IOException {
@@ -30,10 +28,11 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
-        Client client = new Client();
+        Client1 client = new Client1();
         client.startConnection("127.0.0.1", 9999);
         Scanner scanner = new Scanner(new BufferedInputStream(System.in));
         client.clientListener = new ClientListener(client.clientSocket);
+
         while (true) {
             System.out.println("Waiting for input...");
             client.sendMessage(scanner.nextLine());
